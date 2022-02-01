@@ -9,8 +9,10 @@ import SwiftUI
 
 struct CheckoutView: View {
     @ObservedObject var order: Order
-    @State private var confirmationMessage = ""
     @State private var showingConfirmation = false
+    @State private var confirmationTitle = ""
+    @State private var confirmationMessage = ""
+    @State private var orderSuccessful: Bool = false
     @EnvironmentObject var views: Views
     
     var body: some View {
@@ -39,9 +41,11 @@ struct CheckoutView: View {
             }
             .navigationTitle("Check out")
             .navigationBarTitleDisplayMode(.inline)
-            .alert("Thank you!", isPresented: $showingConfirmation) {
+            .alert(confirmationTitle, isPresented: $showingConfirmation) {
                 Button("OK") {
-                    self.views.stacked = false
+                    if orderSuccessful {
+                        self.views.stacked = false
+                    }
                 }
             } message: {
                 Text(confirmationMessage)
@@ -64,9 +68,16 @@ struct CheckoutView: View {
             
             let decodedOrder = try JSONDecoder().decode(Order.self, from: data)
             confirmationMessage = "Your order for \(decodedOrder.quantity) x \(Order.types[decodedOrder.type].lowercased()) cupcakes is on its way!"
+            confirmationTitle = "Thank you!"
+            orderSuccessful = true
+            
             showingConfirmation = true
         } catch {
             print("Checkout failed.")
+            
+            confirmationTitle = "Sorry, something went wrong."
+            confirmationMessage = "Your order could not be placed. Please try again or contact support."
+            showingConfirmation = true
         }
     }
 }
