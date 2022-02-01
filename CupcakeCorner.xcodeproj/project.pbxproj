@@ -38,6 +38,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6B2C5EE727A9FC08001074AD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6B56434A27A45682005AAA80 /* ContentView.swift */,
+				6B0E26E627A506A00074BE02 /* AddressView.swift */,
+				6B0E26E827A5082D0074BE02 /* CheckoutView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6B2C5EE827A9FC0C001074AD /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6B0E26E427A5022B0074BE02 /* Order.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		6B56433C27A45682005AAA80 = {
 			isa = PBXGroup;
 			children = (
@@ -58,10 +76,8 @@
 			isa = PBXGroup;
 			children = (
 				6B56434827A45682005AAA80 /* CupcakeCornerApp.swift */,
-				6B56434A27A45682005AAA80 /* ContentView.swift */,
-				6B0E26E627A506A00074BE02 /* AddressView.swift */,
-				6B0E26E827A5082D0074BE02 /* CheckoutView.swift */,
-				6B0E26E427A5022B0074BE02 /* Order.swift */,
+				6B2C5EE727A9FC08001074AD /* Views */,
+				6B2C5EE827A9FC0C001074AD /* Models */,
 				6B56434C27A45683005AAA80 /* Assets.xcassets */,
 				6B56434E27A45683005AAA80 /* Preview Content */,
 			);
