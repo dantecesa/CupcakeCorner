@@ -7,8 +7,15 @@
 
 import SwiftUI
 
+class Views: ObservableObject {
+    @Published var stacked = false
+}
+
 struct ContentView: View {
     @StateObject var order = Order()
+    @State var orderInProgress: Bool = false
+    
+    @ObservedObject var views = Views()
     
     var body: some View {
         NavigationView {
@@ -36,15 +43,15 @@ struct ContentView: View {
                 }
                 
                 Section {
-                    NavigationLink {
-                        AddressView(order: order)
-                    } label: {
+                    NavigationLink(destination: AddressView(order: order), isActive: self.$views.stacked) {
                         Text("Delivery details")
                     }
                 }
             }
             .navigationTitle("Cupcake Corner")
         }
+        .navigationViewStyle(.stack)
+        .environmentObject(views)
     }
 }
 

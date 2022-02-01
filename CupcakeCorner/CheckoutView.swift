@@ -11,6 +11,7 @@ struct CheckoutView: View {
     @ObservedObject var order: Order
     @State private var confirmationMessage = ""
     @State private var showingConfirmation = false
+    @EnvironmentObject var views: Views
     
     var body: some View {
         ZStack {
@@ -39,7 +40,9 @@ struct CheckoutView: View {
             .navigationTitle("Check out")
             .navigationBarTitleDisplayMode(.inline)
             .alert("Thank you!", isPresented: $showingConfirmation) {
-                Button("OK") { }
+                Button("OK") {
+                    self.views.stacked = false
+                }
             } message: {
                 Text(confirmationMessage)
             }
