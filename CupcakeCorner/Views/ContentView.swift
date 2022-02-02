@@ -12,7 +12,7 @@ class Views: ObservableObject {
 }
 
 struct ContentView: View {
-    @StateObject var order = Order()
+    @StateObject var viewModel = OrderViewModel()
     @State var orderInProgress: Bool = false
     
     @ObservedObject var views = Views()
@@ -21,29 +21,29 @@ struct ContentView: View {
         NavigationView {
             Form {
                 Section {
-                    Picker("🧑🏻‍🍳 Flavor", selection: $order.type) {
+                    Picker("🧑🏻‍🍳 Flavor", selection: $viewModel.currentOrder.type) {
                         ForEach(0..<Order.types.count) { index in
                             Text(Order.types[index])
                         }
                     }
                     
-                    Stepper("# of 🧁s: \(order.quantity)", value: $order.quantity, in: 3...20)
+                    Stepper("# of 🧁s: \(viewModel.currentOrder.quantity)", value: $viewModel.currentOrder.quantity, in: 3...20)
                 }
                 
                 Section {
-                    Toggle("🙇🏻‍♂️ Special Request?", isOn: $order.specialRequestEnabled.animation())
+                    Toggle("🙇🏻‍♂️ Special Request?", isOn: $viewModel.currentOrder.specialRequestEnabled.animation())
                 }
                 
-                if order.specialRequestEnabled {
+                if viewModel.currentOrder.specialRequestEnabled {
                     Section {
-                        Toggle("❄️ Extra Frosting?", isOn: $order.extraFrosting)
+                        Toggle("❄️ Extra Frosting?", isOn: $viewModel.currentOrder.extraFrosting)
                         
-                        Toggle("✨ Add Sprinkles?", isOn: $order.addSprinkles)
+                        Toggle("✨ Add Sprinkles?", isOn: $viewModel.currentOrder.addSprinkles)
                     }
                 }
                 
                 Section {
-                    NavigationLink(destination: AddressView(order: order), isActive: self.$views.stacked) {
+                    NavigationLink(destination: AddressView(viewModel: viewModel), isActive: self.$views.stacked) {
                         Text("Delivery details")
                     }
                 }
